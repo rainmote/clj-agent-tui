@@ -1,0 +1,6 @@
+.cpcache/
+target/
+.omx/
+.omc/
+*.class
+*.jar
