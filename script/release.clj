@@ -70,10 +70,10 @@ Clojars deploy requires CLOJARS_USERNAME and CLOJARS_PASSWORD in the environment
      {:exit 0}
      (shell (cond-> {:inherit true}
               (seq env) (assoc :extra-env env))
-            command))))
+            "bash" "-lc" command))))
 
 (defn capture! [command]
-  (str/trim (:out (shell {:out :string :err :inherit} command))))
+  (str/trim (:out (shell {:out :string :err :inherit} "bash" "-lc" command))))
 
 (defn ensure-git-repo! [ctx]
   (run! ctx "git rev-parse --is-inside-work-tree"))
@@ -91,7 +91,7 @@ Clojars deploy requires CLOJARS_USERNAME and CLOJARS_PASSWORD in the environment
   (if dry-run?
     (println "+" (str "git rev-parse -q --verify refs/tags/" tag " # must not exist"))
     (let [result (shell {:out :string :err :string :continue true}
-                        (str "git rev-parse -q --verify refs/tags/" tag))]
+                        "bash" "-lc" (str "git rev-parse -q --verify refs/tags/" tag))]
       (when (zero? (:exit result))
         (die! (str "Tag already exists locally: " tag)))))
   ctx)
