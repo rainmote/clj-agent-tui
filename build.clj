@@ -4,7 +4,7 @@
    [clojure.tools.build.api :as b]
    [deps-deploy.deps-deploy :as dd]))
 
-(def lib 'rainmote/clj-agent-tui)
+(def lib 'com.github.rainmote/clj-agent-tui)
 (def version (or (System/getenv "VERSION") "0.1.0-alpha1"))
 (def class-dir "target/classes")
 (def jar-file (format "target/%s-%s.jar" (name lib) version))

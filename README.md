@@ -1,8 +1,8 @@
 # clj-agent-tui
 
 [![CI](https://github.com/rainmote/clj-agent-tui/actions/workflows/ci.yml/badge.svg)](https://github.com/rainmote/clj-agent-tui/actions/workflows/ci.yml)
-[![Clojars Project](https://img.shields.io/clojars/v/rainmote/clj-agent-tui.svg)](https://clojars.org/rainmote/clj-agent-tui)
-[![cljdoc badge](https://cljdoc.org/badge/rainmote/clj-agent-tui)](https://cljdoc.org/d/rainmote/clj-agent-tui)
+[![Clojars Project](https://img.shields.io/clojars/v/com.github.rainmote/clj-agent-tui.svg)](https://clojars.org/com.github.rainmote/clj-agent-tui)
+[![cljdoc badge](https://cljdoc.org/badge/com.github.rainmote/clj-agent-tui)](https://cljdoc.org/d/com.github.rainmote/clj-agent-tui)
 
 `clj-agent-tui` is a small Clojure library for composing agent-oriented terminal
 UIs on top of [`charm.clj`](https://github.com/TimoKramer/charm.clj). It provides
@@ -23,7 +23,7 @@ LLM behavior is bound by callers through data/functions.
 Add the library to `deps.edn` after it is published to Clojars:
 
 ```clojure
-{:deps {rainmote/clj-agent-tui {:mvn/version "0.1.0-alpha1"}}}
+{:deps {com.github.rainmote/clj-agent-tui {:mvn/version "0.1.0-alpha1"}}}
 ```
 
 The default dependency on `charm.clj` is a Maven/Clojars dependency so consumers
@@ -119,11 +119,31 @@ clojure -M:dev:test
 
 ## Release
 
-Release tasks are implemented in `build.clj`:
+Release tasks are implemented in `build.clj` and wrapped by Babashka for the
+one-command release flow.
+
+Dry-run the full release plan for a Git tag:
 
 ```bash
-VERSION=0.1.0-alpha1 clojure -T:build jar
-VERSION=0.1.0-alpha1 clojure -T:build deploy
+bb release v0.1.0-alpha1 --dry-run
+```
+
+Run the real release. The task derives `VERSION=0.1.0-alpha1` from the Git tag,
+verifies the project, builds the jar, creates and pushes the annotated tag, and
+publishes to Clojars:
+
+```bash
+export CLOJARS_USERNAME=rainmote
+export CLOJARS_PASSWORD='your Clojars deploy token'
+bb release v0.1.0-alpha1
+```
+
+Useful alternatives:
+
+```bash
+bb release v0.1.0-alpha1 --no-deploy   # build, tag, and push only
+bb release v0.1.0-alpha1 --no-push     # build, tag locally, and deploy only
+bb release v0.1.0-alpha1 --dry-run     # print commands without running them
 ```
 
 See [`doc/release.md`](doc/release.md) for the full release checklist.

@@ -16,6 +16,9 @@ Key entry points:
 - `clojure -M:lint` — runs clj-kondo on `src` and `test`, failing on errors.
 - `clojure -M -m clj-agent-tui.mock` — starts the mock TUI demo.
 - `clojure -M -e "(require '[clj-agent-tui.core :as tui])"` — quick load check for the public API.
+- `bb tasks` — lists Babashka convenience tasks.
+- `bb release v0.1.0-alpha1 --dry-run` — previews the tag-driven release flow.
+- `bb release v0.1.0-alpha1` — verifies, builds, tags, pushes, and deploys to Clojars.
 
 `clojure -T:build jar` builds the publishable jar. Keep changes library-first and test with the commands above.
 
